@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subnet// — Interactive IP Subnet Calculator &amp; Practice</title>
+
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+<meta name="description" content="A live IP subnet calculator with binary bit visualization, plus a practice quiz mode to master subnetting for CCNA and real-world networking.">
+<meta name="theme-color" content="#0A0E12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scanline-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="brand" data-i18n-aria="brandAria">
+      <span class="brand-mark">TrustIT<span class="brand-slash">//</span>Subnet Master</span>
+      <span class="brand-cursor" aria-hidden="true">▌</span>
+    </a>
+    <div class="header-controls">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Toggle language">
+        <span class="lang-en active" data-lang="en">EN</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-fa" data-lang="fa">FA</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow" data-i18n="heroEyebrow">// live binary breakdown</p>
+      <h1 data-i18n="heroTitle">See the bits.<br>Own the subnet.</h1>
+      <p class="hero-sub" data-i18n="heroSub">Type an address, drag the mask — watch exactly which bits belong to the network and which belong to the host, in real time.</p>
+    </div>
+  </section>
+
+  <nav class="mode-tabs" role="tablist" aria-label="Mode">
+    <button class="mode-tab active" id="tabCalc" role="tab" aria-selected="true" aria-controls="panelCalc" data-i18n="tabCalc">Calculator</button>
+    <button class="mode-tab" id="tabQuiz" role="tab" aria-selected="false" aria-controls="panelQuiz" data-i18n="tabQuiz">Practice</button>
+  </nav>
+
+  <!-- ===================== CALCULATOR PANEL ===================== -->
+  <section class="panel" id="panelCalc" role="tabpanel" aria-labelledby="tabCalc">
+    <div class="calc-grid">
+
+      <div class="input-card card">
+        <label class="field-label" for="ipInput" data-i18n="labelIp">IP Address</label>
+        <input type="text" id="ipInput" class="ip-input" value="192.168.1.10" inputmode="decimal" autocomplete="off" spellcheck="false">
+
+        <div class="cidr-row">
+          <label class="field-label" for="cidrRange" data-i18n="labelPrefix">Prefix Length</label>
+          <span class="cidr-value" id="cidrValueLabel">/24</span>
+        </div>
+        <input type="range" id="cidrRange" min="0" max="32" value="24" class="cidr-slider">
+
+        <div class="quick-cidrs" id="quickCidrs"></div>
+
+        <p class="input-error" id="ipError" aria-live="polite"></p>
+      </div>
+
+      <div class="bitgrid-card card">
+        <p class="field-label" data-i18n="labelBits">Address bits</p>
+        <div class="bitgrid" id="bitGrid" aria-hidden="true"></div>
+        <div class="bitgrid-legend">
+          <span class="legend-item"><i class="swatch swatch-net"></i><span data-i18n="legendNetwork">Network</span></span>
+          <span class="legend-item"><i class="swatch swatch-host"></i><span data-i18n="legendHost">Host</span></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="results-grid" id="resultsGrid"></div>
+
+    <div class="card explainer" id="ipClassCard">
+      <p class="field-label" data-i18n="labelClassInfo">Address info</p>
+      <p id="ipClassText" class="explainer-text"></p>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ PANEL ===================== -->
+  <section class="panel hidden" id="panelQuiz" role="tabpanel" aria-labelledby="tabQuiz">
+
+    <div class="quiz-toolbar card">
+      <div class="difficulty-group" id="difficultyGroup" role="group" aria-label="Difficulty">
+        <button class="diff-btn active" data-diff="easy" data-i18n="diffEasy">Easy</button>
+        <button class="diff-btn" data-diff="medium" data-i18n="diffMedium">Medium</button>
+        <button class="diff-btn" data-diff="hard" data-i18n="diffHard">Hard</button>
+      </div>
+      <div class="quiz-stats">
+        <div class="stat">
+          <span class="stat-value" id="statScore">0</span>
+          <span class="stat-label" data-i18n="statScore">Score</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statStreak">0</span>
+          <span class="stat-label" data-i18n="statStreak">Streak</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="statBest">0</span>
+          <span class="stat-label" data-i18n="statBest">Best</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card quiz-card">
+      <p class="quiz-eyebrow" id="quizGiven"></p>
+      <p class="quiz-question" id="quizQuestion"></p>
+
+      <div class="quiz-answer-row">
+        <input type="text" id="quizInput" class="quiz-input" autocomplete="off" spellcheck="false" inputmode="text">
+        <button class="btn-primary" id="quizSubmit" data-i18n="btnCheck">Check</button>
+      </div>
+
+      <p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>
+
+      <button class="btn-ghost" id="quizNext" data-i18n="btnNext">Next question →</button>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p data-i18n="footerText">Built for people who'd rather see the bits than memorize a chart.</p>
+  <p class="footer-credit" data-i18n="footerCredit">Built by <a href="https://trustit.ir" target="_blank" rel="noopener">TrustIT.ir</a></p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
