@@ -20,6 +20,8 @@ visual language.
 - **Bilingual** — English and Persian, with a single toggle that swaps every
   string *and* flips the whole layout to RTL, including the direction the
   slider fills in.
+
+
   - **Live Preview** — [TrustIT Subnet Master](https://trustit.ir/subnetting)
 
 ## Stack
