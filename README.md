@@ -1,5 +1,7 @@
 # TrustIT // Subnet Master
 
+*[Leer en español](README.es.md)*
+
 An interactive IPv4 subnet calculator and practice tool — built to make
 subnetting *visible* instead of memorized. Type an address, drag the prefix
 slider, and watch which of the 32 bits belong to the network and which

@@ -54,6 +54,7 @@
       correct: "✓ Correct.",
       wrong: (ans) => `✗ Not quite — the answer was ${ans}`,
       emptyAnswer: "Type an answer first.",
+      translationCredit: 'Spanish translation by <a href="https://librebits.info" target="_blank" rel="noopener">Librebits</a>',
     },
     fa: {
       brandAria: "ساب‌نت، صفحه اصلی",
@@ -104,10 +105,64 @@
       correct: "✓ درسته.",
       wrong: (ans) => `✗ نه دقیقا — جواب درست: ${ans}`,
       emptyAnswer: "اول یه جواب بنویس.",
+      translationCredit: 'ترجمه‌ی اسپانیایی توسط <a href="https://librebits.info" target="_blank" rel="noopener">Librebits</a>',
+    },
+    es: {
+      brandAria: "Subred, inicio",
+      heroEyebrow: "// desglose binario en vivo",
+      heroTitle: "Mira los bits.<br>Domina la subred.",
+      heroSub: "Escribe una dirección, mueve la máscara — mira en tiempo real qué bits son de network y cuáles de host.",
+      tabCalc: "Calculadora",
+      tabQuiz: "Práctica",
+      labelIp: "Dirección IP",
+      labelPrefix: "Longitud de prefijo",
+      labelBits: "Bits de la dirección",
+      legendNetwork: "Network",
+      legendHost: "Host",
+      labelClassInfo: "Información de la dirección",
+      diffEasy: "Fácil",
+      diffMedium: "Medio",
+      diffHard: "Difícil",
+      statScore: "Puntuación",
+      statStreak: "Racha",
+      statBest: "Mejor racha",
+      btnCheck: "Comprobar",
+      btnNext: "Siguiente pregunta →",
+      footerText: "Hecho para quienes prefieren ver los bits antes que memorizar una tabla.",
+      errInvalidIp: "Eso no parece una dirección IPv4 válida.",
+      rlNetwork: "Dirección de network",
+      rlBroadcast: "Dirección de broadcast",
+      rlMask: "Subnet mask",
+      rlWildcard: "Wildcard mask",
+      rlUsable: "Hosts usables",
+      rlRange: "Rango de hosts",
+      rangeConnector: "a",
+      footerCredit: 'Creado por <a href="https://trustit.ir" target="_blank" rel="noopener">TrustIT.ir</a>',
+      classPrivate: "privada",
+      classPublic: "pública",
+      classLoopback: "loopback",
+      classLinkLocal: "link-local",
+      classMulticast: "multicast",
+      classReserved: "reservada / experimental",
+      classInfoTemplate: (cls, scope) => `Dirección de clase ${cls}, ${scope}. /{cidr} abarca {total} direcciones, {usable} de ellas usables por hosts.`,
+      given: "Dado",
+      quizNetwork: "¿Cuál es la dirección de network?",
+      quizBroadcast: "¿Cuál es la dirección de broadcast?",
+      quizMask: "¿Cuál es la subnet mask, en decimal punteado?",
+      quizWildcard: "¿Cuál es la wildcard mask?",
+      quizUsable: "¿Cuántos hosts usables tiene esta subred?",
+      quizFirst: "¿Cuál es la primera dirección de host usable?",
+      quizLast: "¿Cuál es la última dirección de host usable?",
+      correct: "✓ Correcto.",
+      wrong: (ans) => `✗ No es correcto — la respuesta era ${ans}`,
+      emptyAnswer: "Escribe una respuesta primero.",
+      translationCredit: 'Traducción al español por <a href="https://librebits.info" target="_blank" rel="noopener">Librebits</a>',
     },
   };
 
-  let lang = "en";
+  const LOCALE_MAP = { en: "en-US", fa: "fa-IR", es: "es-ES" };
+
+  let lang = "es";
   const t = (key) => I18N[lang][key];
 
   function applyStaticTranslations() {
@@ -322,15 +377,15 @@
     resultsGrid.appendChild(renderResultCell("rlBroadcast", r.broadcastStr));
     resultsGrid.appendChild(renderResultCell("rlMask", r.maskStr + " (/" + cidr + ")"));
     resultsGrid.appendChild(renderResultCell("rlWildcard", r.wildcardStr));
-    resultsGrid.appendChild(renderResultCell("rlUsable", r.usableHosts.toLocaleString(lang === "fa" ? "fa-IR" : "en-US")));
+    resultsGrid.appendChild(renderResultCell("rlUsable", r.usableHosts.toLocaleString(LOCALE_MAP[lang])));
     resultsGrid.appendChild(renderRangeCell("rlRange", r.firstHostStr, r.lastHostStr));
 
     const { cls, scopeKey } = classify(octets);
     const template = t("classInfoTemplate")(cls, t(scopeKey));
     ipClassText.textContent = template
       .replace("{cidr}", cidr)
-      .replace("{total}", r.totalHosts.toLocaleString(lang === "fa" ? "fa-IR" : "en-US"))
-      .replace("{usable}", r.usableHosts.toLocaleString(lang === "fa" ? "fa-IR" : "en-US"));
+      .replace("{total}", r.totalHosts.toLocaleString(LOCALE_MAP[lang]))
+      .replace("{usable}", r.usableHosts.toLocaleString(LOCALE_MAP[lang]));
   }
 
   ipInput.addEventListener("input", updateCalculator);
@@ -366,13 +421,18 @@
     lang = newLang;
     htmlRoot.setAttribute("lang", lang);
     htmlRoot.setAttribute("dir", lang === "fa" ? "rtl" : "ltr");
-    langToggle.querySelector(".lang-en").classList.toggle("active", lang === "en");
-    langToggle.querySelector(".lang-fa").classList.toggle("active", lang === "fa");
+    langToggle.querySelectorAll(".lang-option").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.lang === lang);
+    });
     applyStaticTranslations();
     updateCalculator();
     renderQuizQuestion(false);
   }
-  langToggle.addEventListener("click", () => setLang(lang === "en" ? "fa" : "en"));
+  langToggle.addEventListener("click", (e) => {
+    const btn = e.target.closest(".lang-option");
+    if (!btn) return;
+    setLang(btn.dataset.lang);
+  });
 
   /* =========================================================
      Quiz mode

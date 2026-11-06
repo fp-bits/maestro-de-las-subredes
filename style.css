@@ -89,16 +89,30 @@ a{ color:inherit; }
 }
 @keyframes blink{ 50%{ opacity:0; } }
 
+.brand-wrap{ display:flex; flex-direction:column; gap:2px; }
+.brand-credit{
+  font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+}
+.brand-credit a{
+  color:var(--net); text-decoration:none; border-bottom:1px solid var(--net-dim);
+  transition:border-color .15s ease, color .15s ease;
+}
+.brand-credit a:hover{ border-color:var(--net); color:var(--text); }
+
 .lang-toggle{
   font-family:var(--font-mono); font-size:13px; font-weight:600;
   background:var(--bg-elevated); border:1px solid var(--border);
-  border-radius:999px; padding:6px 12px; cursor:pointer;
+  border-radius:999px; padding:6px 12px;
   color:var(--text-dim); display:inline-flex; align-items:center; gap:6px;
   transition:border-color .15s ease;
 }
 .lang-toggle:hover{ border-color:var(--net-dim); }
 .lang-toggle .lang-sep{ color:var(--text-faint); }
-.lang-toggle .active{ color:var(--net); }
+.lang-toggle .lang-option{
+  font:inherit; background:none; border:none; padding:0; margin:0;
+  color:inherit; cursor:pointer;
+}
+.lang-toggle .lang-option.active{ color:var(--net); }
 
 /* =========================================================
    Layout
