@@ -7,6 +7,9 @@
   const I18N = {
     en: {
       brandAria: "Subnet, home",
+      languageToggleAria: "Toggle language",
+      modeTabsAria: "Mode",
+      difficultyAria: "Difficulty",
       heroEyebrow: "// live binary breakdown",
       heroTitle: "See the bits.<br>Own the subnet.",
       heroSub: "Type an address, drag the mask — watch exactly which bits belong to the network and which belong to the host, in real time.",
@@ -58,6 +61,9 @@
     },
     fa: {
       brandAria: "ساب‌نت، صفحه اصلی",
+      languageToggleAria: "تغییر زبان",
+      modeTabsAria: "حالت",
+      difficultyAria: "سختی",
       heroEyebrow: "// تحلیل زنده‌ی باینری",
       heroTitle: "بیت‌ها رو ببین.<br>ساب‌نت رو مال خودت کن.",
       heroSub: "یه آدرس بنویس، ماسک رو جابه‌جا کن — دقیقا ببین کدوم بیت‌ها مال شبکه‌ست و کدوم‌ها مال هاست، به‌صورت لحظه‌ای.",
@@ -109,19 +115,22 @@
     },
     es: {
       brandAria: "Subred, inicio",
-      heroEyebrow: "// desglose binario en vivo",
-      heroTitle: "Mira los bits.<br>Domina la subred.",
-      heroSub: "Escribe una dirección, mueve la máscara — mira en tiempo real qué bits son de network y cuáles de host.",
+      languageToggleAria: "Cambiar idioma",
+      modeTabsAria: "Modo",
+      difficultyAria: "Dificultad",
+      heroEyebrow: "// desglose binario en tiempo real",
+      heroTitle: "Visualiza los bits.<br>Domina la subred.",
+      heroSub: "Escribe una dirección, ajusta la máscara y observa en tiempo real qué bits corresponden a la red y cuáles al host.",
       tabCalc: "Calculadora",
       tabQuiz: "Práctica",
       labelIp: "Dirección IP",
-      labelPrefix: "Longitud de prefijo",
+      labelPrefix: "Longitud del prefijo",
       labelBits: "Bits de la dirección",
-      legendNetwork: "Network",
+      legendNetwork: "Red",
       legendHost: "Host",
       labelClassInfo: "Información de la dirección",
       diffEasy: "Fácil",
-      diffMedium: "Medio",
+      diffMedium: "Intermedia",
       diffHard: "Difícil",
       statScore: "Puntuación",
       statStreak: "Racha",
@@ -130,11 +139,11 @@
       btnNext: "Siguiente pregunta →",
       footerText: "Hecho para quienes prefieren ver los bits antes que memorizar una tabla.",
       errInvalidIp: "Eso no parece una dirección IPv4 válida.",
-      rlNetwork: "Dirección de network",
-      rlBroadcast: "Dirección de broadcast",
-      rlMask: "Subnet mask",
-      rlWildcard: "Wildcard mask",
-      rlUsable: "Hosts usables",
+      rlNetwork: "Dirección de red",
+      rlBroadcast: "Dirección de difusión",
+      rlMask: "Máscara de subred",
+      rlWildcard: "Máscara wildcard",
+      rlUsable: "Hosts utilizables",
       rlRange: "Rango de hosts",
       rangeConnector: "a",
       footerCredit: 'Creado por <a href="https://trustit.ir" target="_blank" rel="noopener">TrustIT.ir</a>',
@@ -144,18 +153,18 @@
       classLinkLocal: "link-local",
       classMulticast: "multicast",
       classReserved: "reservada / experimental",
-      classInfoTemplate: (cls, scope) => `Dirección de clase ${cls}, ${scope}. /{cidr} abarca {total} direcciones, {usable} de ellas usables por hosts.`,
-      given: "Dado",
-      quizNetwork: "¿Cuál es la dirección de network?",
-      quizBroadcast: "¿Cuál es la dirección de broadcast?",
-      quizMask: "¿Cuál es la subnet mask, en decimal punteado?",
-      quizWildcard: "¿Cuál es la wildcard mask?",
-      quizUsable: "¿Cuántos hosts usables tiene esta subred?",
-      quizFirst: "¿Cuál es la primera dirección de host usable?",
-      quizLast: "¿Cuál es la última dirección de host usable?",
+      classInfoTemplate: (cls, scope) => `Dirección de clase ${cls}, ${scope}. La subred /{cidr} abarca {total} direcciones, {usable} de ellas asignables a hosts.`,
+      given: "Datos",
+      quizNetwork: "¿Cuál es la dirección de red?",
+      quizBroadcast: "¿Cuál es la dirección de difusión?",
+      quizMask: "¿Cuál es la máscara de subred en formato decimal punteado?",
+      quizWildcard: "¿Cuál es la máscara wildcard?",
+      quizUsable: "¿Cuántas direcciones de host utilizables tiene esta subred?",
+      quizFirst: "¿Cuál es la primera dirección de host utilizable?",
+      quizLast: "¿Cuál es la última dirección de host utilizable?",
       correct: "✓ Correcto.",
-      wrong: (ans) => `✗ No es correcto — la respuesta era ${ans}`,
-      emptyAnswer: "Escribe una respuesta primero.",
+      wrong: (ans) => `✗ Incorrecto: la respuesta era ${ans}`,
+      emptyAnswer: "Escribe una respuesta antes de comprobarla.",
       translationCredit: 'Traducción al español por <a href="https://librebits.info" target="_blank" rel="noopener">Librebits</a>',
     },
   };
@@ -170,6 +179,11 @@
       const key = el.getAttribute("data-i18n");
       const val = I18N[lang][key];
       if (typeof val === "string") el.innerHTML = val;
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-aria");
+      const val = I18N[lang][key];
+      if (typeof val === "string") el.setAttribute("aria-label", val);
     });
   }
 

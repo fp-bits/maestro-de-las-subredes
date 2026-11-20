@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrustIT // Subnet Master - con la traducción al ES de Librebits</title>
+<title>TrustIT // Subnet Master - Calculadora de subredes IPv4</title>
 
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
-<meta name="description" content="A live IP subnet calculator with binary bit visualization, plus a practice quiz mode to master subnetting for CCNA and real-world networking.">
+<meta name="description" content="Calculadora interactiva de subredes IPv4 con visualización binaria y modo de práctica para dominar el subnetting.">
 <meta name="theme-color" content="#0A0E12">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,7 @@
       <span class="brand-credit" data-i18n="translationCredit"></span>
     </div>
     <div class="header-controls">
-      <div class="lang-toggle" id="langToggle" role="group" aria-label="Toggle language">
+      <div class="lang-toggle" id="langToggle" role="group" aria-label="Cambiar idioma" data-i18n-aria="languageToggleAria">
         <button type="button" class="lang-option lang-en" data-lang="en">EN</button>
         <span class="lang-sep">/</span>
         <button type="button" class="lang-option lang-fa" data-lang="fa">FA</button>
@@ -45,15 +45,15 @@
 <main>
   <section class="hero">
     <div class="hero-inner">
-      <p class="eyebrow" data-i18n="heroEyebrow">// live binary breakdown</p>
-      <h1 data-i18n="heroTitle">See the bits.<br>Own the subnet.</h1>
-      <p class="hero-sub" data-i18n="heroSub">Type an address, drag the mask — watch exactly which bits belong to the network and which belong to the host, in real time.</p>
+      <p class="eyebrow" data-i18n="heroEyebrow">// desglose binario en tiempo real</p>
+      <h1 data-i18n="heroTitle">Visualiza los bits.<br>Domina la subred.</h1>
+      <p class="hero-sub" data-i18n="heroSub">Escribe una dirección, ajusta la máscara y observa en tiempo real qué bits corresponden a la red y cuáles al host.</p>
     </div>
   </section>
 
-  <nav class="mode-tabs" role="tablist" aria-label="Mode">
-    <button class="mode-tab active" id="tabCalc" role="tab" aria-selected="true" aria-controls="panelCalc" data-i18n="tabCalc">Calculator</button>
-    <button class="mode-tab" id="tabQuiz" role="tab" aria-selected="false" aria-controls="panelQuiz" data-i18n="tabQuiz">Practice</button>
+  <nav class="mode-tabs" role="tablist" aria-label="Modo" data-i18n-aria="modeTabsAria">
+    <button class="mode-tab active" id="tabCalc" role="tab" aria-selected="true" aria-controls="panelCalc" data-i18n="tabCalc">Calculadora</button>
+    <button class="mode-tab" id="tabQuiz" role="tab" aria-selected="false" aria-controls="panelQuiz" data-i18n="tabQuiz">Práctica</button>
   </nav>
 
   <!-- ===================== CALCULATOR PANEL ===================== -->
@@ -61,11 +61,11 @@
     <div class="calc-grid">
 
       <div class="input-card card">
-        <label class="field-label" for="ipInput" data-i18n="labelIp">IP Address</label>
+        <label class="field-label" for="ipInput" data-i18n="labelIp">Dirección IP</label>
         <input type="text" id="ipInput" class="ip-input" value="192.168.1.10" inputmode="decimal" autocomplete="off" spellcheck="false">
 
         <div class="cidr-row">
-          <label class="field-label" for="cidrRange" data-i18n="labelPrefix">Prefix Length</label>
+          <label class="field-label" for="cidrRange" data-i18n="labelPrefix">Longitud del prefijo</label>
           <span class="cidr-value" id="cidrValueLabel">/24</span>
         </div>
         <input type="range" id="cidrRange" min="0" max="32" value="24" class="cidr-slider">
@@ -76,10 +76,10 @@
       </div>
 
       <div class="bitgrid-card card">
-        <p class="field-label" data-i18n="labelBits">Address bits</p>
+        <p class="field-label" data-i18n="labelBits">Bits de la dirección</p>
         <div class="bitgrid" id="bitGrid" aria-hidden="true"></div>
         <div class="bitgrid-legend">
-          <span class="legend-item"><i class="swatch swatch-net"></i><span data-i18n="legendNetwork">Network</span></span>
+          <span class="legend-item"><i class="swatch swatch-net"></i><span data-i18n="legendNetwork">Red</span></span>
           <span class="legend-item"><i class="swatch swatch-host"></i><span data-i18n="legendHost">Host</span></span>
         </div>
       </div>
@@ -89,7 +89,7 @@
     <div class="results-grid" id="resultsGrid"></div>
 
     <div class="card explainer" id="ipClassCard">
-      <p class="field-label" data-i18n="labelClassInfo">Address info</p>
+      <p class="field-label" data-i18n="labelClassInfo">Información de la dirección</p>
       <p id="ipClassText" class="explainer-text"></p>
     </div>
   </section>
@@ -98,23 +98,23 @@
   <section class="panel hidden" id="panelQuiz" role="tabpanel" aria-labelledby="tabQuiz">
 
     <div class="quiz-toolbar card">
-      <div class="difficulty-group" id="difficultyGroup" role="group" aria-label="Difficulty">
-        <button class="diff-btn active" data-diff="easy" data-i18n="diffEasy">Easy</button>
-        <button class="diff-btn" data-diff="medium" data-i18n="diffMedium">Medium</button>
-        <button class="diff-btn" data-diff="hard" data-i18n="diffHard">Hard</button>
+      <div class="difficulty-group" id="difficultyGroup" role="group" aria-label="Dificultad" data-i18n-aria="difficultyAria">
+        <button class="diff-btn active" data-diff="easy" data-i18n="diffEasy">Fácil</button>
+        <button class="diff-btn" data-diff="medium" data-i18n="diffMedium">Intermedia</button>
+        <button class="diff-btn" data-diff="hard" data-i18n="diffHard">Difícil</button>
       </div>
       <div class="quiz-stats">
         <div class="stat">
           <span class="stat-value" id="statScore">0</span>
-          <span class="stat-label" data-i18n="statScore">Score</span>
+          <span class="stat-label" data-i18n="statScore">Puntuación</span>
         </div>
         <div class="stat">
           <span class="stat-value" id="statStreak">0</span>
-          <span class="stat-label" data-i18n="statStreak">Streak</span>
+          <span class="stat-label" data-i18n="statStreak">Racha</span>
         </div>
         <div class="stat">
           <span class="stat-value" id="statBest">0</span>
-          <span class="stat-label" data-i18n="statBest">Best</span>
+          <span class="stat-label" data-i18n="statBest">Mejor racha</span>
         </div>
       </div>
     </div>
@@ -125,19 +125,19 @@
 
       <div class="quiz-answer-row">
         <input type="text" id="quizInput" class="quiz-input" autocomplete="off" spellcheck="false" inputmode="text">
-        <button class="btn-primary" id="quizSubmit" data-i18n="btnCheck">Check</button>
+        <button class="btn-primary" id="quizSubmit" data-i18n="btnCheck">Comprobar</button>
       </div>
 
       <p class="quiz-feedback" id="quizFeedback" aria-live="polite"></p>
 
-      <button class="btn-ghost" id="quizNext" data-i18n="btnNext">Next question →</button>
+      <button class="btn-ghost" id="quizNext" data-i18n="btnNext">Siguiente pregunta →</button>
     </div>
   </section>
 </main>
 
 <footer class="site-footer">
-  <p data-i18n="footerText">Built for people who'd rather see the bits than memorize a chart.</p>
-  <p class="footer-credit" data-i18n="footerCredit">Built by <a href="https://trustit.ir" target="_blank" rel="noopener">TrustIT.ir</a></p>
+  <p data-i18n="footerText">Hecho para quienes prefieren ver los bits antes que memorizar una tabla.</p>
+  <p class="footer-credit" data-i18n="footerCredit">Creado por <a href="https://trustit.ir" target="_blank" rel="noopener">TrustIT.ir</a></p>
   <p class="footer-credit" data-i18n="translationCredit"></p>
 </footer>
 
