@@ -61,6 +61,34 @@ html[dir="rtl"] body{ font-family:var(--font-fa); }
 
 a{ color:inherit; }
 
+.github-ribbon{
+  position:relative; z-index:21;
+  background:#267d2e;
+  text-align:center;
+}
+.github-ribbon a{
+  display:block; padding:6px 12px;
+  color:#fff; font:700 13px var(--font-mono);
+  text-decoration:none;
+}
+.github-ribbon a:hover{ text-decoration:underline; }
+.github-ribbon a:focus-visible{ outline:2px solid #fff; outline-offset:-3px; }
+@media (min-width:1280px){
+  .github-ribbon{
+    position:absolute; top:0; right:0;
+    width:180px; height:180px; overflow:hidden;
+    background:transparent;
+  }
+  .github-ribbon a{
+    position:absolute; top:42px; right:-57px;
+    width:250px; padding:8px 0;
+    background:#267d2e;
+    border-block:1px solid rgba(255,255,255,0.5);
+    box-shadow:0 2px 6px rgba(0,0,0,0.4);
+    transform:rotate(45deg);
+  }
+}
+
 /* =========================================================
    Header
    ========================================================= */

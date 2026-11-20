@@ -23,6 +23,7 @@ visual inspirado en terminal.
 - **Multiidioma** — inglés, persa y español, con un selector que cambia
   todos los textos *y*, en el caso del persa, invierte todo el layout a
   RTL, incluida la dirección en que se rellena el deslizador.
+- **Fork en GitHub** — la cinta verde enlaza al repositorio de este proyecto.
 
   - **Demo en vivo** — [TrustIT Subnet Master](https://trustit.ir/subnetting)
 

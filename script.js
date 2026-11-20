@@ -7,6 +7,7 @@
   const I18N = {
     en: {
       brandAria: "Subnet, home",
+      githubRibbon: "Fork me on GitHub",
       languageToggleAria: "Toggle language",
       modeTabsAria: "Mode",
       difficultyAria: "Difficulty",
@@ -61,6 +62,7 @@
     },
     fa: {
       brandAria: "ساب‌نت، صفحه اصلی",
+      githubRibbon: "فورک در GitHub",
       languageToggleAria: "تغییر زبان",
       modeTabsAria: "حالت",
       difficultyAria: "سختی",
@@ -115,6 +117,7 @@
     },
     es: {
       brandAria: "Subred, inicio",
+      githubRibbon: "Forkéame en GitHub",
       languageToggleAria: "Cambiar idioma",
       modeTabsAria: "Modo",
       difficultyAria: "Dificultad",
